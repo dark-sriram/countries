@@ -1,21 +1,60 @@
-.card-container {
-    display:grid; 
-    gap: 20px;           
-    flex-wrap: wrap;       
-}
-.body{
-    margin: 50px;
-}
 
 .card {
     display: grid;
-    gap: 30px;
-    grid-template-columns: repeat(4, 1fr); 
-    width:calc(25% - 40px);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    padding: 16px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.country-card {
+    padding: 10px;
     text-align: center;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    min-width: 150px;
+}
+
+.img-box {
+    height: 140px;
+    width: 100%;
+}
+
+.img-box img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.country h3 {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px;
+}
+
+.pagination-container button {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-container button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-container button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.pagination-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
