@@ -1,0 +1,21 @@
+.card-container {
+    display:grid; 
+    gap: 20px;           
+    flex-wrap: wrap;       
+}
+.body{
+    margin: 50px;
+}
+
+.card {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(4, 1fr); 
+    width:calc(25% - 40px);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 16px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    min-width: 150px;
+}
