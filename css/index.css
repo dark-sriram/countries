@@ -1,3 +1,24 @@
+.search-container {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+}
+#search-input {
+    width: 90%;
+    max-width: 500px;
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    font-size: 1.1rem;
+    transition: border-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: #4a6fa5;
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+}
 
 .card {
     display: grid;
@@ -57,4 +78,16 @@
 .pagination-container button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        padding: 1rem;
+    }
+    
+    #search-input {
+        width: 95%;
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
 }
