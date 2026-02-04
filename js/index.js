@@ -6,7 +6,7 @@ const searchInput = document.getElementById('search-input');
 
 async function fetchData() {
     try {
-        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,flags');
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,flags,capital,borders');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         allCountries = await response.json();
@@ -51,15 +51,21 @@ function displayPage(page) {
         return;
     }
 
-    container.innerHTML = paginatedItems.map(country => `
-        <div class="country-card" role="article" aria-label="${country.name.common}">
-            <div class="img-box">
-                <img src="${country.flags.png}" alt="Flag of ${country.name.common}"
-                    loading="lazy" ">
-            </div>
-            <h3>${country.name.common}</h3>
+container.innerHTML = paginatedItems.map((country, index) => `
+    <div class="country-card"
+         role="button"
+         tabindex="0"
+         data-index="${startIndex + index}"
+         aria-label="${country.name.common}">
+        <div class="img-box">
+            <img src="${country.flags.png}"
+                 alt="Flag of ${country.name.common}"
+                 loading="lazy">
         </div>
-    `).join("");
+        <h3>${country.name.common}</h3>
+    </div>
+`).join("");
+
 
     renderPagination(page);
 }
@@ -113,4 +119,82 @@ function changePage(newPage) {
         document.querySelector('.country-card')?.focus();
     }, 300);
 }
+
+
+const modal = document.getElementById('country-modal');
+const modalName = document.getElementById('modal-name');
+const modalFlag = document.getElementById('modal-flag');
+const closeBtn = document.querySelector('.modal-close');
+const modalBorder = document.getElementById('model-border');
+
+function openModal(country) {
+    modalName.textContent = country.name.common;
+    modalBorder.textContent = `${country.borders}`;
+    modalFlag.src = country.flags.png;
+    modalFlag.alt = `Flag of ${country.name.common}`;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+
+function closeModal() {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+closeBtn.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+
+document.querySelector('.card').addEventListener('click', (e) => {
+    const card = e.target.closest('.country-card');
+    if (!card) return;
+
+    const index = card.dataset.index;
+    const country = filteredCountries[index];
+    getWeather(country);
+    openModal(country);
+});
+
+
+
 fetchData();
+
+
+const apiKey = 'zpka_c836193431974d979fc58841f14c210b_48706df0';
+
+async function getWeather(country) {
+    try {
+        const cityName=`${country.capital}`;
+        const locationUrl = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${cityName}`;
+        const locationResponse = await fetch(locationUrl);
+        const locationData = await locationResponse.json();
+        console.log(locationData);
+        const locationKey = locationData[0].Key;
+        const localizedName = locationData[0].LocalizedName;
+
+        const weatherUrl = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}`;
+        const weatherResponse = await fetch(weatherUrl);
+        const weatherData = await weatherResponse.json();
+
+        updateUI(localizedName, weatherData[0]);
+
+    } catch (error) {
+        console.error("Error fetching weather:", error);
+        document.getElementById('city-name').innerText = "Location not found";
+    }
+}
+
+function updateUI(name, data) {
+    document.getElementById('city-name').innerText = name;
+    document.getElementById('temp').innerText = `${data.Temperature.Metric.Value}°C`;
+    document.getElementById('condition').innerText = data.WeatherText;
+}
+
