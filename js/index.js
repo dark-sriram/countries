@@ -168,7 +168,7 @@ document.querySelector('.card').addEventListener('click', (e) => {
 fetchData();
 
 
-const apiKey = 'zpka_c836193431974d979fc58841f14c210b_48706df0';
+const apiKey = 'your_api__key';
 
 async function getWeather(country) {
     try {
