@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loading</title>
+    <link rel="stylesheet" href="loader.css">
+</head>
+<body>
+<div class="card">
+  <div class="card-skeleton" id="skeleton">
+    <div class="skeleton img"></div>
+    <div class="card-body">
+      <div class="skeleton title"></div>
+      <div class="skeleton text"></div>
+      <div class="skeleton text short"></div>
+    </div>
+  </div>
+
+  <div class="card-content hidden" id="content">
+    <img src="https://picsum.photos/300/180" />
+    <div class="card-body">
+      <h3>Card title</h3>
+      <p>This is the card description loaded from API.</p>
+    </div>
+  </div>
+</div>
+
+    <script src="loader.js"></script>
+</body>
+
+</html>
